@@ -28,3 +28,17 @@ def transaction_to_string(state, item):
     return(
         f"({state}, {item['read']}) -> ({item['to_state']}, {item['write']}, {item['action']})"
     )
+
+def print_help():
+    error_msg = """
+    |usage: ft_turing [-h] jsonfile input
+    |
+    |positional arguments:
+    |   jsonfile json description of the machine
+    |
+    |   input input of the machine
+    |
+    |optional arguments:
+    |-h, --help show this help message and exit
+    """
+    return print(textwrap.dedent(error_msg).replace("|", "").strip()), exit(1)
