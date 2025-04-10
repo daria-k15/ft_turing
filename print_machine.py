@@ -42,3 +42,7 @@ def print_help():
     |-h, --help show this help message and exit
     """
     return print(textwrap.dedent(error_msg).replace("|", "").strip()), exit(1)
+
+def print_status(tape, i, state, item):
+    tape[i] = f"<{tape[i]}>"
+    print("".join(tape) + " " + transaction_to_string(state, item))
