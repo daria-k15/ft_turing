@@ -1,25 +1,24 @@
 {
-    "name" : "unary_add",
-    "alphabet": [ "1", ".", "+" ],
-    "blank" : ".",
-    "states" : [ "Q0", "Q1", "Q2", "finish", "HALT" ],
-    "initial" : "Q0",
-    "finals" : [ "HALT" ],
-    
-    "transitions" : {
-        "Q0": [
-            { "read" : "1", "to_state": "Q0", "write": "1", "action": "RIGHT"},
-            { "read" : "+", "to_state": "Q1", "write": "1", "action": "RIGHT"}
+    "name": "unary_add",
+    "alphabet": [ "1", ".", "+", "=" ],
+    "blank": ".",
+    "states": [ "scanright", "eraseone", "swapone", "HALT" ],
+    "initial": "scanright",
+    "finals": [ "HALT" ],
+    "transitions": {
+        "scanright": [
+            { "read": ".", "to_state": "scanright", "write": ".", "action": "RIGHT" },
+            { "read": "1", "to_state": "scanright", "write": "1", "action": "RIGHT" },
+            { "read": "+", "to_state": "swapone", "write": "+", "action": "RIGHT" },
+            { "read": "=", "to_state": "eraseone", "write": ".", "action": "LEFT" }
         ],
-        "Q1": [
-            { "read" : "1", "to_state": "Q1", "write": "1", "action": "RIGHT"},
-            { "read" : ".", "to_state": "Q2" , "write": ".", "action": "LEFT"}
+        "eraseone": [
+            { "read": "+", "to_state": "HALT", "write": ".", "action": "RIGHT" }
         ],
-        "Q2": [
-            { "read" : "1", "to_state": "finish", "write": ".", "action": "RIGHT"}
-        ],
-        "finish": [
-            { "read" : ".", "to_state": "HALT" , "write": ".", "action": "RIGHT"}
+        "swapone": [
+            { "read": "1", "to_state": "swapone", "write": "+", "action": "LEFT" },
+            { "read": "+", "to_state": "scanright", "write": "1", "action": "RIGHT" },
+            { "read": "=", "to_state": "eraseone", "write": ".", "action": "LEFT" }
         ]
     }
 }
