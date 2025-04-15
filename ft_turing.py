@@ -2,6 +2,7 @@ import sys
 import json
 from print_machine import print_machine
 from print_machine import print_help
+from print_machine import print_status
 from parsing import check_input_tape, parse_data
 
 def execute_turing_machine(tape, machine_config, i = 0, state = None):
@@ -16,18 +17,18 @@ def execute_turing_machine(tape, machine_config, i = 0, state = None):
     for item in transitions[state]:
         if item['read'] == tape[i]:
             new_i, new_state, new_tape = transition(i, tape, item, machine_config['blank'], state)
-            return turing_machine(new_tape, machine_config, new_i, new_state)
+            return execute_turing_machine(new_tape, machine_config, new_i, new_state)
 
 def transition(i, tape, item, blank, current_state):
     print_status(tape.copy(), i, current_state, item)
-    new_tape = tape[:]
+    new_tape = list(tape)
     new_tape[i] = item['write']
     new_i = i - 1 if item["action"] == "LEFT" else i+1
     if new_i < 0:
-        new_tape.insert(0, blank)
+        new_tape = [blank] + new_tape
         new_i = 0
     elif new_i >= len(new_tape):
-        new_tape.append(blank)
+        new_tape = new_tape + [blank]
     
     return new_i, item['to_state'], new_tape
 

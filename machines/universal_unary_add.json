@@ -1,0 +1,44 @@
+{
+    "name" : "universal_unary_add",
+    "alphabet": [ "1", ".", "+", "=", "0", "|", "A", "B", "C", "D", "E", "R", "L", "_" ],
+    "blank" : ".",
+    "states" : [ "clean1", "scanright", "addone", "skip", "HALT", "cleanup" ],
+    "initial" : "clean1",
+    "finals" : [ "HALT" ],
+    "transitions" : {
+        "clean1": [
+            { "read" : ".", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "1", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "0", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "=", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "+", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "|", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "A", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "B", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "C", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "D", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "E", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "R", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "L", "to_state": "clean1", "write": ".", "action": "RIGHT"},
+            { "read" : "_", "to_state": "scanright", "write": ".", "action": "RIGHT"}
+        ],
+        "scanright": [
+            { "read" : ".", "to_state": "scanright", "write": ".", "action": "RIGHT"},
+            { "read" : "1", "to_state": "scanright", "write": "1", "action": "RIGHT"},
+            { "read" : "+", "to_state": "addone", "write": ".", "action": "RIGHT"}
+        ],
+        "addone": [
+            { "read" : "1", "to_state": "addone", "write": ".", "action": "LEFT"},
+            { "read" : ".", "to_state": "skip" , "write": "1", "action": "RIGHT"}
+        ],
+        "cleanup": [
+            { "read" : ".", "to_state": "cleanup" , "write": ".", "action": "LEFT" },
+            { "read" : "1", "to_state": "HALT" , "write": "1", "action": "RIGHT" }
+        ],
+        "skip": [
+            { "read" : ".", "to_state": "skip" , "write": ".", "action": "RIGHT"},
+            { "read" : "1", "to_state": "addone", "write": ".", "action": "LEFT"},
+            { "read" : "=", "to_state": "cleanup" , "write": ".", "action": "LEFT" }
+        ]
+    }
+}
